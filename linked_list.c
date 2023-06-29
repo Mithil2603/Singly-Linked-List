@@ -59,7 +59,7 @@ int main()
         break;
         case 7:
             delete_first();
-        break;
+        break; 
         case 8:
             delete_last();
         break;
