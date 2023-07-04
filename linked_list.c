@@ -11,13 +11,15 @@ struct node *head, *newnode, *ptr, *temp;
 
 void create(int n);
 void display();
+int count();
 void insert_at_beginning();
 void insert_at_end();
-int count();
 void insert_before();
 void insert_after();
 void delete_first();
 void delete_last();
+void delete_before();
+void delete_after();
 
 int main()
 {
@@ -31,6 +33,8 @@ int main()
     printf("Enter 6 to insert a node after a specific node.\n");
     printf("Enter 7 to delete the first node.\n");
     printf("Enter 8 to delete the last node.\n");
+    printf("Enter 9 to delete the node before a specific node.\n");
+    printf("Enter 10 to delete the node after a specific node.\n");
     while(choice != 0)
     {
         printf("\nEnter Your Choice from above code: ");
@@ -62,6 +66,12 @@ int main()
         break; 
         case 8:
             delete_last();
+        break;
+        case 9:
+            delete_before();
+        break;
+        case 10:
+            delete_after();
         break;
         default:
             printf("Invalid Choice!\n");
@@ -137,8 +147,8 @@ void display()
     }
     else
     {
+        printf("List: Head->");
         ptr = head;
-        printf("Head->");
         while(ptr!=NULL)
         {
             printf("%d->", ptr->data);
@@ -305,5 +315,82 @@ void delete_last()
         ptr->next = NULL;
         free(temp);
         printf("Last Node Deleted!\n");
+    }
+}
+
+void delete_before()
+{
+    int pos, i, c;
+    if(head == NULL)
+    {
+        printf("Empty List!\n");
+    }
+    else
+    {
+        c = count();
+        temp = head;
+        printf("Enter the position before which you want to delete the node: ");
+        scanf("%d", &pos);
+        if(pos > c)
+        {
+            printf("Invalid Position!\n");
+        }
+        else
+        {
+            if(pos == 1)
+            {
+                printf("There is no node available before the first node.\n");
+            }
+            else if(pos == 2)
+            {
+                ptr = temp;
+                temp = temp->next;
+                head = ptr->next;
+                free(ptr);
+                printf("Node Deleted!\n");
+            }
+            else
+            {
+                for(i=1; i<pos-1; i++)
+                {
+                    ptr = temp;
+                    temp = temp->next;
+                }
+                ptr->next = temp->next;
+                free(temp);
+                printf("Node Deleted!\n");
+            }
+        }
+    }
+}
+
+void delete_after()
+{
+    int pos, i, c;
+    if(head == NULL)
+    {
+        printf("Empty List!\n");
+    }
+    else
+    {
+        c = count();
+        printf("Enter the position after which you want to delete the node: ");
+        scanf("%d", &pos);
+        if(pos > c)
+        {
+            printf("Invalid Position!\n");
+        }
+        else
+        {
+            temp = head;
+            for(i=1; i<pos+1; i++)
+            {
+                ptr = temp;
+                temp = temp->next;
+            }
+            ptr->next = temp->next;
+            free(temp);
+            printf("Node Deleted!\n");
+        }
     }
 }
