@@ -7,7 +7,7 @@ struct node
     int data;
     struct node *next;
 };
-struct node *head, *newnode, *ptr, *temp;
+struct node *head, *newnode, *ptr, *temp, *head1;
 
 void create(int n);
 void display();
@@ -20,6 +20,9 @@ void delete_first();
 void delete_last();
 void delete_before();
 void delete_after();
+void splitting();
+void merging();
+void counting_odd_even();
 
 int main()
 {
@@ -35,6 +38,9 @@ int main()
     printf("Enter 8 to delete the last node.\n");
     printf("Enter 9 to delete the node before a specific node.\n");
     printf("Enter 10 to delete the node after a specific node.\n");
+    printf("Enter 11 to if you want to split the nodes in two lists.\n");
+    printf("Enter 12 to if you want to merge the splitted lists.\n");
+    printf("Enter 13 to display how many odd and even nodes are there.\n");
     while(choice != 0)
     {
         printf("\nEnter Your Choice from above code: ");
@@ -72,6 +78,15 @@ int main()
         break;
         case 10:
             delete_after();
+        break;
+        case 11:
+            splitting();
+        break;
+        case 12:
+            merging();
+        break;
+        case 13:
+            counting_odd_even();
         break;
         default:
             printf("Invalid Choice!\n");
@@ -392,5 +407,88 @@ void delete_after()
             free(temp);
             printf("Node Deleted!\n");
         }
+    }
+}
+
+void splitting()
+{
+    int i=0, pos, c;
+    c = count();
+    printf("Total Nodes: %d\n", c);
+    temp = head;
+    pos = c/2;
+    while(i<pos-1)
+    {
+        temp = temp->next;
+        i++;
+    }
+    head1 = temp->next;
+    temp->next = NULL;
+    printf("\n******Splitting List******\n");
+    temp = head;
+    printf("List1: Head->");
+    while(temp!=NULL)
+    {
+        printf("%d->", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    temp = head1;
+    printf("List2: Head1->");
+    while(temp!=NULL)
+    {
+        printf("%d->", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    printf("Lists Splitted!\n");
+}
+
+void merging()
+{
+    temp = head;
+    while(temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = head1;
+    printf("Lists Merged!\n");
+}
+
+void counting_odd_even()
+{
+    struct node *oddpointer, *evenpointer;
+    int odd = 0, even = 0, c;
+    c = count();
+    printf("Total Present Nodes are %d.\n", c);
+    if(head == NULL)
+    {
+        printf("Empty List!\n");
+    }
+    else if(head->next == NULL)
+    {
+        printf("Only one is available!\n");
+    }
+    else
+    {
+        oddpointer = head;
+        odd++;
+        evenpointer = head->next; // or evenpointer = oddpointer->next;
+        even++;
+        while(oddpointer->next!=NULL && evenpointer->next!=NULL)
+        {
+            oddpointer = evenpointer->next;
+            if(oddpointer!=NULL)
+            {
+                odd++;
+            }
+            evenpointer = oddpointer->next;
+            if(evenpointer!=NULL)
+            {
+                even++;
+            }
+        }
+        printf("Even Nodes are %d.\n", even);
+        printf("Odd Nodes are %d.\n", odd);
     }
 }
