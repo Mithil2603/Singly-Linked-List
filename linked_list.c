@@ -23,6 +23,7 @@ void delete_after();
 void splitting();
 void merging();
 void counting_odd_even();
+void sorting();
 
 int main()
 {
@@ -41,6 +42,7 @@ int main()
     printf("Enter 11 to if you want to split the nodes in two lists.\n");
     printf("Enter 12 to if you want to merge the splitted lists.\n");
     printf("Enter 13 to display how many odd and even nodes are there.\n");
+    printf("Enter 14 to sort the linked list.\n");
     while(choice != 0)
     {
         printf("\nEnter Your Choice from above code: ");
@@ -87,6 +89,9 @@ int main()
         break;
         case 13:
             counting_odd_even();
+        break;
+        case 14:
+            sorting();
         break;
         default:
             printf("Invalid Choice!\n");
@@ -491,4 +496,38 @@ void counting_odd_even()
         printf("Even Nodes are %d.\n", even);
         printf("Odd Nodes are %d.\n", odd);
     }
+}
+
+void sorting()
+{
+    struct node *temp1, *current;
+    int temp_data;
+    
+    if (head == NULL)
+    {
+        printf("Empty list!\n");
+        return;
+    }
+    
+    // Initialize pointers
+    temp1 = head;
+    current = NULL;
+
+    // Perform bubble sort on the linked list
+    while (temp1 != NULL)
+    {
+        current = temp1->next;
+        while (current != NULL)
+        {
+            if (temp1->data > current->data)
+            {
+                temp_data = temp1->data;
+                temp1->data = current->data;
+                current->data = temp_data;
+            }
+            current = current->next;
+        }
+        temp1 = temp1->next;
+    }
+    printf("Operation Sorting is Successfully done!\n");
 }
